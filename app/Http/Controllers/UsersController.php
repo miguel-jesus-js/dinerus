@@ -21,7 +21,7 @@ class UsersController extends Controller
         try{
             User::create($data);
             $session = LoginController::serviceLogin($request);
-            return $session;
+            return json_encode(['type' => 'success', 'message' => 'Cuenta creada']);
         } catch(\Exception $e){
             return json_encode(['type' => 'success', 'message' => $e]);
         }
