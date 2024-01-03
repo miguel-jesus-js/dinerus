@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('password', 255);
             $table->string('api_token', 255)->nullable(true);
             $table->boolean('paid')->default(false);
-            $table->string('voucher')->nullable(false);
+            $table->string('voucher')->nullable(true);
             $table->rememberToken();
             $table->timestamps();
         });
