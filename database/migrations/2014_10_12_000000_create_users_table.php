@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('curp', 18)->unique();
             $table->string('rfc', 13)->unique();
             $table->string('ine', 100);
-            $table->string('facial_recognition');
+            $table->string('facial_recognition')->nullable(true);
             $table->integer('account_number')->unique()->unsigned();
             $table->string('bank', 30);
             $table->string('shift', 30);
