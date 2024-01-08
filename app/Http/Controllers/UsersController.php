@@ -23,7 +23,7 @@ class UsersController extends Controller
             $session = LoginController::serviceLogin($request);
             return json_encode(['type' => 'success', 'message' => 'Cuenta creada']);
         } catch(\Exception $e){
-            return json_encode(['type' => 'success', 'message' => $e]);
+            return json_encode(['type' => 'error', 'message' => $e]);
         }
     }
     public function paid(Request $request)
@@ -38,7 +38,7 @@ class UsersController extends Controller
             $user = User::find(Auth::user()->id);
             $user->voucher = $imgName;
             $user->save();
-            return json_encode(['type' => 'error', 'message' => 'Exito']);
+            return json_encode(['type' => 'success', 'message' => 'Exito']);
         } catch(\Exception $e){
             return json_encode(['type' => 'error', 'message' => $e]);
         }
