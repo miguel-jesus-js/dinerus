@@ -20,7 +20,6 @@ class UsersController extends Controller
         $data = array_merge($data, ['ine' => $imgName, 'shift' => uniqid(), 'password' => Hash::make($data['pass'])]);
         try{
             User::create($data);
-            $session = LoginController::serviceLogin($request);
             return json_encode(['type' => 'success', 'message' => 'Cuenta creada']);
         } catch(\Exception $e){
             return json_encode(['type' => 'error', 'message' => $e]);

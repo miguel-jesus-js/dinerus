@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('rfc', 13)->unique();
             $table->string('ine', 100);
             $table->string('facial_recognition')->nullable(true);
-            $table->unsignedBigInteger('account_number')->unique()->unsigned();
+            $table->string('account_number', 18)->unique();
             $table->string('bank', 30);
             $table->string('shift', 30);
             $table->string('email', 100)->unique();
