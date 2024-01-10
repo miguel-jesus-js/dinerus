@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('full_name', 60);
-            $table->string('curp', 18)->unique();
-            $table->string('rfc', 13)->unique();
-            $table->string('ine', 100);
+            //$table->string('curp', 18)->unique();
+            //$table->string('rfc', 13)->unique();
+            //$table->string('ine', 100);
             $table->string('facial_recognition')->nullable(true);
             $table->string('account_number', 18)->unique();
             $table->string('bank', 30);

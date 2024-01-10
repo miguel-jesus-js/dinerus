@@ -19,9 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'full_name',
-        'curp',
-        'rfc',
-        'ine',
+        //'curp',
+        //'rfc',
+        //'ine',
         'facial_recognition',
         'account_number',
         'bank',
