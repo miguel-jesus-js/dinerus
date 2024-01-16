@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Notifications\ResetPassword;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -31,14 +32,18 @@ class LoginController extends Controller
 
         if (User::where('email', $email['email'])->exists()) {
 
-            $usuario = User::where('email', $email['email'])->first();
-            $password = Str::random(10);
-            $usuario->password = Hash::make($password);
-            $usuario->save();
-            $usuario->notify(new ResetPassword($password));
-            return json_encode(['type' => 'success', 'title' => 'Éxito', 'text' => 'Se envio la nueva contraseña al correo: ' .$email['email']]);
+            try{
+                $usuario = User::where('email', $email['email'])->first();
+                $password = Str::random(10);
+                $usuario->password = Hash::make($password);
+                $usuario->save();
+                $usuario->notify(new ResetPassword($password));
+                return json_encode(['type' => 'success', 'title' => 'Éxito', 'text' => 'Se envio la nueva contraseña al correo: ' .$email['email']]);
+            }catch(\Exception $e){
+                return json_encode(['type' => 'error', 'title' => 'Error', 'text' => $e]);
+            }
 
         } 
-        return json_encode(['type' => 'error', 'title' => 'Error', 'text' => 'Correo no existe']);
+        return json_encode(['type' => 'error', 'title' => 'Error', 'text' => 'El correo no existe']);
     }
 }
