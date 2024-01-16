@@ -56,4 +56,9 @@ class UsersController extends Controller
             return json_encode(['type' => 'error', 'message' => $e]);
         }
     }
+    public function show()
+    {
+        $users = User::all();
+        return view('users', compact('users'));
+    }
 }
