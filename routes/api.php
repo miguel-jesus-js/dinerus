@@ -21,8 +21,8 @@ use App\Http\Controllers\LoginController;
 // });
 
 Route::middleware('auth:api')->group(function () {
+    Route::patch('/user/paid', [UsersController::class, 'paid']);
 });
-Route::patch('/user/paid', [UsersController::class, 'paid']);
 Route::post('/user/create', [UsersController::class, 'store']);
 Route::post('/login', [LoginController::class, 'serviceLogin']);
 Route::post('/reset-password', [LoginController::class, 'resetPassword']);

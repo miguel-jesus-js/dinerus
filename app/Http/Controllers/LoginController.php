@@ -22,9 +22,9 @@ class LoginController extends Controller
         if (Auth::attempt($credenciales)) {
             $token = Str::random(60);
             Auth::user()->forceFill(['api_token' => hash('sha256', $token)])->save();
-            return json_encode(['title' => 'Éxito', 'message' => 'Sesión iniciada', 'token' => $token, 'userdata' => Auth::user()]);
+            return json_encode(['type' => 'success', 'message' => 'Sesión iniciada', 'token' => $token, 'userdata' => Auth::user()]);
         }
-        return json_encode(['title' => 'Error', 'message' => 'Credenciales invalidas']);
+        return json_encode(['type' => 'error', 'message' => 'Credenciales invalidas']);
     }
     public function resetPassword(Request $request)
     {
