@@ -18,3 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/usuarios', [UsersController::class, 'show']);
+Route::get('/get-vaucher/{id}', [UsersController::class, 'downloadVoucher']);
+Route::get('/mark-as-paid/{id}', [UsersController::class, 'markAsPaid']);

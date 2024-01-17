@@ -61,4 +61,18 @@ class UsersController extends Controller
         $users = User::all();
         return view('users', compact('users'));
     }
+    public function downloadVoucher(Int $id)
+    {
+        $user = User::find($id);
+        $voucher = public_path('img/comprobante/'.$user->voucher);
+        return response()->file($voucher);
+    }
+    public function markAsPaid($id)
+    {
+        $user = User::find($id);
+        $user->paid = 1;
+        $user->save();
+        $users = User::all();
+        return view('users', compact('users'));
+    }
 }

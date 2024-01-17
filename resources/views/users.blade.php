@@ -42,14 +42,14 @@
                             <td>{{$user->shift}}</td>
                             <td>{{$user->reference}}</td>
                             <td>{{$user->email}}</td>
-                            <td>{{$user->paid}}</td>
+                            <td>{{$user->paid ? 'Si' : 'No'}}</td>
                             <td>
-                                <button class="btn">
-                                    Descargar comprobante
-                                </button>
-                                <button class="btn">
+                                <a href="/get-vaucher/{{$user->id}}" class="btn" target="_blank">
+                                    ver comprobante
+                                </a>
+                                <a href="/mark-as-paid/{{$user->id}}" class="btn">
                                     Marcar como pagado
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
