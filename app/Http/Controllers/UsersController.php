@@ -75,4 +75,20 @@ class UsersController extends Controller
         $users = User::all();
         return view('users', compact('users'));
     }
+
+    public function deleteAccountIndex()
+    {
+        return view('delete-account');
+    }
+
+    public function deleteAccountRemove(Request $request)
+    {
+        $user = User::query()->where('email', $request->email);
+
+        if (!$user) {
+            return "Si el email existe la cuenta sera eliminada de nuestra base de datos.";
+        }
+        $user->delete();
+        return "Si el email existe la cuenta sera eliminada de nuestra base de datos.";
+    }
 }
