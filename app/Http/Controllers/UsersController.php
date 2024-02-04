@@ -91,4 +91,9 @@ class UsersController extends Controller
         $user->delete();
         return "Si el email existe la cuenta sera eliminada de nuestra base de datos.";
     }
+
+    public function terminosCondiciones()
+    {
+        return view('termino-condiciones');
+    }
 }

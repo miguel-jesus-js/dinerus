@@ -21,4 +21,5 @@ Route::get('/usuarios', [UsersController::class, 'show']);
 Route::get('/get-vaucher/{id}', [UsersController::class, 'downloadVoucher']);
 Route::get('/mark-as-paid/{id}', [UsersController::class, 'markAsPaid']);
 Route::get('/delete-account', [UsersController::class, 'deleteAccountIndex']);
+Route::get('/termino-condiciones', [UsersController::class, 'terminosCondiciones']);
 Route::delete('/delete-account', [UsersController::class, 'deleteAccountRemove'])->name('delete-account');
