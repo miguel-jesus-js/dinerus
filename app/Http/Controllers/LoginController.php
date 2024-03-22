@@ -13,15 +13,16 @@ class LoginController extends Controller
 {
     public static function serviceLogin(Request $request)
     {
-        // Equivalente a tablas: 1 = clientes, 2 = repartidores, 3 = restaurantes     
+        // Equivalente a tablas: 1 = clientes, 2 = repartidores, 3 = restaurantes
         $request->validate([
             'email'         => ['required', 'email', 'string'],
-            'password'      => ['required', 'string']
+            'password'      => ['required', 'string'],
         ]);
         $credenciales = $request->only('email', 'password'); //obtiene solo esos dos datos
         if (Auth::attempt($credenciales)) {
             $token = Str::random(60);
             Auth::user()->forceFill(['api_token' => hash('sha256', $token)])->save();
+            Auth::user()->load('tickets');
             return json_encode(['type' => 'success', 'message' => 'Sesión iniciada', 'token' => $token, 'userdata' => Auth::user()]);
         }
         return json_encode(['type' => 'error', 'message' => 'Credenciales invalidas']);
@@ -43,7 +44,7 @@ class LoginController extends Controller
                 return json_encode(['type' => 'error', 'title' => 'Error', 'text' => $e]);
             }
 
-        } 
+        }
         return json_encode(['type' => 'error', 'title' => 'Error', 'text' => 'El correo no existe']);
     }
 }

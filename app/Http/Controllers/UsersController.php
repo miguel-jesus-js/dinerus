@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -21,19 +22,24 @@ class UsersController extends Controller
         try{
             $user = User::create($data);
 
-            $ultimoRegistro = User::latest()->first();
+            $ultimoRegistro = Ticket::latest()->first();
+
             if(isset($ultimoRegistro))
             {
-                $shift = ($ultimoRegistro->id * 10) -1;
-                $reference = 'dinerus000'.$ultimoRegistro->id;
+                $shift = ( ($ultimoRegistro->id + 36) * 10) -1;
+                $reference = 'dinerus'.str_pad($ultimoRegistro->id + 36, 5, '0', STR_PAD_LEFT);
             }else{
                 $shift = 1;
-                $reference = 'dinerus0001';
+                $reference = 'dinerus00001';
             }
             $user->shift = $shift;
             $user->reference = $reference;
             $user->save();
-
+            $user->tickets()->create([
+                'reference' => $reference,
+                'shift' => $shift,
+                'paid' => 0
+            ]);
             return json_encode(['type' => 'success', 'message' => 'Cuenta creada']);
         } catch(\Exception $e){
             return json_encode(['type' => 'error', 'message' => $e]);
@@ -55,6 +61,38 @@ class UsersController extends Controller
         } catch(\Exception $e){
             return json_encode(['type' => 'error', 'message' => $e]);
         }
+    }
+
+    public function regenerate()
+    {
+        $ultimoRegistro = Ticket::latest()->first();
+
+        if(isset($ultimoRegistro))
+        {
+            $shift = ( ($ultimoRegistro->id + 36) * 10) -1;
+            $reference = 'dinerus'.str_pad($ultimoRegistro->id + 36, 5, '0', STR_PAD_LEFT);
+        }else{
+            $shift = 1;
+            $reference = 'dinerus00001';
+        }
+
+        $user = Auth::user();
+
+        $user->tickets()->create([
+            'reference' => $reference,
+            'shift' => $shift,
+            'paid' => 0
+        ]);
+
+        $user->update([
+            'reference' => $reference,
+            'shift' => $shift,
+            'paid' => 0,
+            'voucher' => null
+        ]);
+
+        return User::find($user->id);
+
     }
     public function show()
     {
